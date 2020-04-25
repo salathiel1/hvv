@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>cluster heatmap</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+	<div class="tab navbar">
+	  <button class="tablinks active" id="tabExploration" onclick="openTab(event, 'Arvore')">Exploration</button>
+	  <button class="tablinks" id="tabCollection" onclick="openTab(event, 'Videos')">Collection</button>
+	  <!--<button class="tablinks" onclick="openTab(event, 'Caracteristicas')">Caracteristicas</button>-->
+	  <button class="tablinks" onclick="openTab(event, 'Pesquisa')">Search</button>
+	  <button class="tablinks" onclick="openTab(event, 'Categorias')">Categories</button>
+	</div>
+
+	<br><br>
+	<div class="tab">
+		<button style="display: none;" class="buttonsec" id="btSimilarity">Similarity[s]</button>
+		<button class="buttonsec" id="btCor">Concept color[c]</button>
+		<button class="active" id="btImg">Thumbnails[t]</button>
+		<button id="btDraw">Cluster shot columns[h]</button>
+	</div>
+
+	<div id="Arvore" class="tabcontent">
+		<svg id="svg" width="960" height="500"></svg>
+		<button class="graybutton" style="float: right;" id="btAspectRatio"> [ ] </button>
+		<button class="graybutton" style="float: right;" id="btBackGN">Back[b]</button>
+		<br><br><br>
+		<h1>Tree view</h1>
+		<div class="tab">
+		  <button class="tablinksarv active" onclick="openTabArv(event, 'Padrao')">Tree</button>
+		  <button class="tablinksarv" onclick="openTabArv(event, 'Circulos')">Circle Pack</button>
+		  <button class="tablinksarv" onclick="openTabArv(event, 'Sunburst')">Sunburst</button>
+		  <button class="tablinksarv" onclick="openTabArv(event, 'Treemap')">Treemap</button>
+		</div>
+		<div id="Padrao" class="tabarv">
+			<svg id="svgArv"></svg>
+		</div>
+		<div id="Circulos" class="tabarv">
+			<svg id="svgArvCirculos"></svg>
+		</div>
+		<div id="Sunburst" class="tabarv">
+			<svg id="svgArvSunburst"></svg>
+		</div>
+		<div id="Treemap" class="tabarv">
+			<svg id="svgArvTreemap"></svg>
+		</div>
+		<hr>
+	</div>
+
+	<div id="Videos" class="tabcontent">
+		<button class="graybutton" style="float: right;" id="btZoomMore">-</button>
+		<button class="graybutton" style="float: right;" id="btZoomLess">+</button>
+		<p>Dendogram size: </p>
+		<input type="range" min="50" max="100" value="50" class="slider" style="float: left;" id="myRange">
+
+		<svg id="svg3"></svg>
+
+	</div>
+
+	<!-- <div id="Caracteristicas" class="tabcontent">
+	  <svg id="svgCaracs"></svg>
+	</div> -->
+
+	<div id="Pesquisa" class="tabcontent">
+
+	  <h3>Search by similar image</h3>
+	   <form action="/pesquisa_img" method="post" id="imagem_form" enctype="multipart/form-data">
+	    <p>Image example: <input type="file" class="graybutton" name="imagem"><p>
+	    <p> Show <input type="text" name="limit" id="limit" value="3"> best results </p>
+	    <input type="submit" class="graybutton" id="submitImage" value="Submit">
+	  </form>
+	  <div id="responseImage"></div>
+	  <hr>
+
+	  <h3>Search by text description</h3>
+	   <form action="/pesquisa_text" method="post" id="texto_form">
+	    <p>Description: <input type="text" name="pesquisa" id="pesquisa" value=""> <p>
+	    <p> Show <input type="text" name="tlimit" id="tlimit" value="3"> best results </p>
+	    <input type="submit" class="graybutton" id="submitText" value="Submit">
+	  </form>
+	  <div id="responseText"></div>
+	  <hr>
+
+	  <br>
+	  <button disabled id="bcleansearch" class="graybutton" onclick="return limparPesquisa();">Clean search</button>
+	  <br>
+
+	</div>
+
+
+	<div id="Categorias" class="tabcontent">
+		<h3>Categories</h3>
+		<input type="text" id="myInput" placeholder="Beach">
+		<button class="graybutton" onclick="newElement()">Add</button>
+		
+		<br><br>
+
+		<ul id="myUL">
+		</ul>
+
+		<br><br>
+
+		<form action="/cluster_cat" method="post"  id="cluster_form" multiple>
+			<input type="hidden" id="threshold" name="threshold" value="0.8"> <!-- 0.65 -->
+			<button type="submit" class="graybutton" id="btncatCluster">Cluster with categories</button>
+		</form>
+	</div>
+
+
+
+
+	<div class="tab footnode" id="catdiv" style="display: none">
+		<input type="checkbox" id="emptycat" style="float: right;margin-right:20px;" name="emptycat">
+		<label style="float: right;margin-left:10px;" for="emptycat">Show empty</label>
+	</div>
+
+	<div id="wrapperVideo" class="wrapper stuck">
+		<a  onclick="return closeVideo();" class="btClosevideo">✖</a>
+		<video id="myVideo" width="320" height="176" controls>
+		  <source src="" type="video/mp4">
+		  Your browser does not support HTML5 video.
+		</video>
+	</div>
+
+	<div class="menu" id="menulabel">
+	  <ul class="menu-options">
+	  </ul>
+	</div>
+
+	<br>
+
+
+
+
+
+
+
+	<script src="script/d3.v4.min.js"></script>
+	<script src="script/jquery-3.4.1.min.js"></script>
+
+	<!-- <script src="script/exploration.js" type="module"></script> -->
+
+	<!-- <script src="script/collection.js" type="module"></script> -->
+
+	<script src="main.js" type="module"></script>
+	<!-- <script src="pesquisa.js" type="module"></script> -->
+
+</body>
+</html>
