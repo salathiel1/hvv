@@ -5,6 +5,7 @@
 ### Requirements
 * Anaconda https://www.anaconda.com/
 * Python (recommended version: 3.6.9) https://www.python.org/
+* scenedetect https://pypi.org/project/scenedetect/
 
 ### Instaling enviroment
 
