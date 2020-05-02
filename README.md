@@ -20,6 +20,17 @@ conda env create -f environment.yml
 conda activate servidor
 ```
 
+3. Install cocoapi, from folder *cocoapi/PythonAPI* run:
+
+```bash
+pip install -e .
+```
+
+4. Download NIC model and copy to *extracaoAtributos/nic/result*. Link: https://drive.google.com/file/d/12OuDuiNkJ_sAhEy2MI7bLW8vLK_9kXyS/view
+
+5. Download ELMO model and copy to *extracaoAtributos/elmo/variables*. Link:
+https://drive.google.com/file/d/12UR8A1DOu8QJUbq0lzNeK1BKUL7OQf9w/view
+
 ## Using
 
 ### Quick test:
